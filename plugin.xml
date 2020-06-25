@@ -21,9 +21,9 @@
     <source-file src="src/android/cordova/plugins/gms/places/PlaceAutocompleteDialog.java" target-dir="src/cordova/plugins/gms/places" />
 
     <config-file target="res/xml/config.xml" parent="/*">
-      <feature name="PlaceAutocompleteDialog">
-        <param name="android-package" value="cordova.plugins.gms.places.PlaceAutocompleteDialog" />
-      </feature>
-    </config-file>
+            <feature name="GooglePlaces">
+                <param name="android-package" value="by.chemerisuk.cordova.google.PlacesPlugin" />
+            </feature>
+        </config-file>
   </platform>
 </plugin>
