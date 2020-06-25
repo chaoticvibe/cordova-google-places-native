@@ -1,100 +1,103 @@
-package cordova.plugins.gms.places;
+package by.chemerisuk.cordova.google;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.List;
+import java.util.Arrays;
+
+import by.chemerisuk.cordova.support.CordovaMethod;
+import by.chemerisuk.cordova.support.ReflectiveCordovaPlugin;
+
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.model.TypeFilter;
+import com.google.android.libraries.places.api.model.AutocompleteSessionToken;
+import com.google.android.libraries.places.api.model.AutocompletePrediction;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+
+import org.apache.cordova.CallbackContext;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.apache.cordova.CordovaPlugin;
-import org.apache.cordova.CordovaInterface;
-import org.apache.cordova.CallbackContext;
-import org.apache.cordova.CordovaWebView;
+public class PlacesPlugin extends ReflectiveCordovaPlugin {
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
+  private PlacesClient placesClient;
+  private AutocompleteSessionToken token;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.compat.Place;
-import com.google.android.libraries.places.compat.ui.PlaceAutocomplete;
+    @Override
+    protected void pluginInitialize() {
+      String apiKey = preferences.getString("PLACES_ANDROID_API_KEY", "");
+      Places.initialize(cordova.getActivity().getApplicationContext(), apiKey);
+      placesClient = Places.createClient(cordova.getActivity().getApplicationContext());
+      token = AutocompleteSessionToken.newInstance();
+    }
 
+    @CordovaMethod
+    public void getPredictions(String query, JSONObject settings, final CallbackContext callbackContext) throws JSONException {
+      if (settings.getBoolean("newSession")) {
+        token = AutocompleteSessionToken.newInstance();
+      }
+      FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
+        .setCountry((settings.has("country")) ? settings.getString("country") : null)
+        .setTypeFilter((settings.has("types")) ? TypeFilter.values()[settings.getInt("types") - 1] : null)
+        .setSessionToken(token)
+        .setQuery(query)
+        .build();
+      
+      placesClient.findAutocompletePredictions(request).addOnSuccessListener((response) -> {
+        JSONArray result = new JSONArray();
+        for (AutocompletePrediction prediction : response.getAutocompletePredictions()) {
+          result.put(predictionToJSON(prediction));
+        }
+        callbackContext.success(result);
+      }).addOnFailureListener((exception) -> {
+        callbackContext.error(exception.getMessage());
+      });
+    }
 
+    @CordovaMethod
+    public void getById(String placeId, final CallbackContext callbackContext) {
+      List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+      FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
-public class PlaceAutocompleteDialog extends CordovaPlugin {
+      placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
+        Place place = response.getPlace();
+        callbackContext.success(placeToJSON(place));
+      }).addOnFailureListener((exception) -> {
+        callbackContext.error(exception.getMessage());
+      });
+    }
 
-	public static final String ACTION_SHOW = "show";
+    private JSONObject predictionToJSON(AutocompletePrediction prediction) {
+      try {
+        JSONObject result = new JSONObject();
+        result.put("fullText", prediction.getFullText(null));
+        result.put("primaryText", prediction.getPrimaryText(null));
+        result.put("secondaryText", prediction.getSecondaryText(null));
+        result.put("placeId", prediction.getPlaceId());
+        return result;
+      } catch (JSONException e) {
+        return null;
+      }
+    }
 
-	protected int AUTOCOMPLETE_REQUEST_CODE = 1;
-
-	protected CallbackContext callbackContext = null;
-	protected PlaceAutocomplete.IntentBuilder intentBuilder = null;
-
-	@Override
-	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
-		super.initialize(cordova, webView);
-	}
-
-	@Override
-	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) {
-		this.callbackContext = callbackContext;
-		if (action.equals(this.ACTION_SHOW)) {
-			this.show();
-		} else {
-			return false;
-		}
-		return true;
-	}
-
-	protected void show() {
-		try {
-			this.intentBuilder = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY);
-			this.cordova.startActivityForResult((CordovaPlugin) this,
-					this.intentBuilder.build(this.cordova.getActivity()), this.AUTOCOMPLETE_REQUEST_CODE);
-		} catch (Exception exception) {
-			this.callbackContext.error(exception.toString());
-		}
-	}
-
-	protected JSONObject encodePlace(Place place) throws JSONException {
-		JSONObject encodedPlace = new JSONObject();
-		encodedPlace.put("name", place.getName());
-		JSONObject encodedCoordinates = new JSONObject();
-		encodedCoordinates.put("latitude", place.getLatLng().latitude);
-		encodedCoordinates.put("longitude", place.getLatLng().longitude);
-		encodedPlace.put("coordinates", encodedCoordinates);
-		return encodedPlace;
-	}
-
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (this.callbackContext == null) {
-			return;
-		}
-		if (requestCode != this.AUTOCOMPLETE_REQUEST_CODE) {
-			return;
-		}
-		if (resultCode == Activity.RESULT_CANCELED) {
-			this.callbackContext.error("Canceled.");
-			return;
-		}
-		if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-			Status status = PlaceAutocomplete.getStatus(this.cordova.getActivity(), data);
-			this.callbackContext.error(status.getStatusMessage());
-			return;
-		}
-		try {
-			Place place = PlaceAutocomplete.getPlace(this.cordova.getActivity(), data);
-			if (place == null) {
-				this.callbackContext.success();
-				return;
-			}
-			JSONObject placeAsJSON = this.encodePlace(place);
-			this.callbackContext.success(placeAsJSON);
-		} catch (Exception exception) {
-			this.callbackContext.error(exception.toString());
-		}
-	}
-
-	public void onRestoreStateForActivityResult(Bundle state, CallbackContext callbackContext) {
-		this.callbackContext = callbackContext;
-	}
-
+    private JSONObject placeToJSON(Place place) {
+        try {
+            JSONObject result = new JSONObject();
+            result.put("placeId", place.getId());
+            result.put("name", place.getName());
+            result.put("formattedAddress", place.getAddress());
+            result.put("latlng", new JSONArray()
+                .put(place.getLatLng().latitude)
+                .put(place.getLatLng().longitude)
+            );
+            return result;
+        } catch (JSONException e) {
+            return null;
+        }
+    }
 }
