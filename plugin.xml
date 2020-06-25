@@ -7,10 +7,10 @@
   <repo>https://github.com/ertgl/cordova-plugin-place-autocomplete</repo>
   <issue>https://github.com/ertgl/cordova-plugin-place-autocomplete/issues</issue>
 
-  <js-module name="PlaceAutocompleteDialog" src="www/PlaceAutocompleteDialog.js">
-    <clobbers target="cordova.plugins.gms.places.PlaceAutocompleteDialog" />
+  <js-module name="GooglePlaces" src="www/PlaceAutocompleteDialog.js">
+       <merges target="cordova.plugins.google.places" />
   </js-module>
-
+  
   <engines>
     <engine name="cordova" version=">=3.6.0" />
   </engines>
