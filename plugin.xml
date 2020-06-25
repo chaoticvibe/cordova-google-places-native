@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-place-autocomplete" version="1.0.0">
+  <name>Google Maps Place Autocomplete Dialog</name>
+  <description>Native Google Maps PlaceAutocomplete plugin for Cordova.</description>
+  <license>MIT</license>
+  <keywords>cordova,plugin,google,maps,place,autocomplete,dialog,android</keywords>
+  <repo>https://github.com/ertgl/cordova-plugin-place-autocomplete</repo>
+  <issue>https://github.com/ertgl/cordova-plugin-place-autocomplete/issues</issue>
+
+  <js-module name="PlaceAutocompleteDialog" src="www/PlaceAutocompleteDialog.js">
+    <clobbers target="cordova.plugins.gms.places.PlaceAutocompleteDialog" />
+  </js-module>
+
+  <engines>
+    <engine name="cordova" version=">=3.6.0" />
+  </engines>
+
+  <platform name="android">
+    <framework src="src/android/PlaceAutocompleteDialog.gradle" custom="true" type="gradleReference" />
+
+    <source-file src="src/android/cordova/plugins/gms/places/PlaceAutocompleteDialog.java" target-dir="src/cordova/plugins/gms/places" />
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="PlaceAutocompleteDialog">
+        <param name="android-package" value="cordova.plugins.gms.places.PlaceAutocompleteDialog" />
+      </feature>
+    </config-file>
+  </platform>
+</plugin>

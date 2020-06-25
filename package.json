@@ -1,0 +1,65 @@
+{
+  "_from": "cordova-plugin-place-autocomplete",
+  "_id": "cordova-plugin-place-autocomplete@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-Op0VGIou85cFSXU4KzZH/5yYlJf3mGOKB87J26Tnrmeswjlvdll5u1p9oOpfTmsoJQi5pe7fdG9NDKV0xJU5Sg==",
+  "_location": "/cordova-plugin-place-autocomplete",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-place-autocomplete",
+    "name": "cordova-plugin-place-autocomplete",
+    "escapedName": "cordova-plugin-place-autocomplete",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-place-autocomplete/-/cordova-plugin-place-autocomplete-1.0.0.tgz",
+  "_shasum": "39039751b3e52060d80e65e61aec511b6ffab3e2",
+  "_spec": "cordova-plugin-place-autocomplete",
+  "_where": "/home/macgyver/TF",
+  "author": {
+    "name": "Ertuğrul Keremoğlu",
+    "email": "ertugkeremoglu@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/ertgl/cordova-plugin-place-autocomplete/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-place-autocomplete",
+    "platforms": [
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Native Google Maps PlaceAutocomplete plugin for Cordova.",
+  "homepage": "https://github.com/ertgl/cordova-plugin-place-autocomplete",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova",
+    "plugin",
+    "native",
+    "google",
+    "maps",
+    "place",
+    "autocomplete",
+    "android"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-place-autocomplete",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ertgl/cordova-plugin-place-autocomplete.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
