@@ -1,19 +1,15 @@
-### Cordova Place Autocomplete Plugin
+### Cordova Places Native
 
-[![npm version](https://badge.fury.io/js/cordova-plugin-place-autocomplete.svg)](https://badge.fury.io/js/cordova-plugin-place-autocomplete)
+This plugis is focused in "google official places autocomplete api", but you can found another functions or sadly can't found some functions... 
+Feel free to commit or open an issue or pull request... plese repport any bug or unexpected behavior. Thank yoy
 
-**`Install:`**
-```sh
-cordova plugin add cordova-plugin-place-autocomplete --save
+This is free, but does not have any guarantee to work. You can use it for free in your commercial projects.
 
-```
-
-
-**`Usage:`**
+**`Basic Usage Examples:`**
 ```javascript
 var onPlaceAutocompleteResult = function(place) {
-  //
-};
+  //ut
+}; B
 
 var onPlaceAutocompleteError = function(error) {
   //
@@ -33,17 +29,4 @@ window.cordova.plugins.gms.places.PlaceAutocompleteDialog.show(onPlaceAutocomple
     longitude: Double
   }
 }
-```
-
-
-**`AndroidManifest.xml:`**
-
-```xml
-<application ...>
-  <meta-data android:name="com.google.android.geo.API_KEY" android:value="YOUR_API_KEY" />
-  <uses-library android:name="org.apache.http.legacy" android:required="false" />
-</application>
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
 ```
