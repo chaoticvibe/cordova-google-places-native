@@ -16,6 +16,7 @@
   </engines>
 
   <platform name="android">
+    <dependency id="cordova-androidx-build" />
     <framework src="src/android/PlaceAutocompleteDialog.gradle" custom="true" type="gradleReference" />
 
     <source-file src="src/android/cordova/plugins/gms/places/PlacesPlugin.java" target-dir="src/cordova/plugins/gms/places" />
