@@ -16,7 +16,7 @@
   </engines>
 
   <platform name="android">
-    <framework src = "androidx.core: core: $ ANDROIDX_CORE_VERSION" />
+    <framework src="androidx.core:core:$ANDROIDX_CORE_VERSION" />
     <dependency id="cordova-androidx-build" />
     <framework src="src/android/PlaceAutocompleteDialog.gradle" custom="true" type="gradleReference" />
 
