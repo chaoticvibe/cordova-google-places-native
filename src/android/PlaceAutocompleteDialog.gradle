@@ -1,6 +1,8 @@
 android {
     defaultConfig {
-        multiDexEnabled true
+       multiDexEnabled true
+       useAndroidX true
+       enableJetifier true
     }
 }
 
