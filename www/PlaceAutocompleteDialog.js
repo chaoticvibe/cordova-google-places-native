@@ -10,9 +10,9 @@ module.exports = {
                 options.types = 2;
             } else if (options.types == "establishment") {
                 options.types = 3;
-            } else if (options.types == "(regions)") {
+            } else if (options.types == "regions") {
                 options.types = 4;
-            } else if (options.types == "(cities)") {
+            } else if (options.types == "cities") {
                 options.types = 5;
             }
 
