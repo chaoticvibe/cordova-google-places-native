@@ -43,7 +43,6 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
         token = AutocompleteSessionToken.newInstance();
       }
       FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
-        .setOrigin(null)
         .setCountry((settings.has("country")) ? settings.getString("country") : null)
         .setTypeFilter((settings.has("types")) ? TypeFilter.values()[settings.getInt("types") - 1] : null)
         .setSessionToken(token)
