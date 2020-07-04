@@ -102,7 +102,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
             for (AddressComponent a : place.getAddressComponents().asList()) {
               JSONObject typeobjt = new JSONObject();
               
-                typeobjt.put("types", a.getTypes());
+                typeobjt.put("types", a.getTypes().toString());
               
               
                 typeobjt.put("shortName", a.getShortName());
