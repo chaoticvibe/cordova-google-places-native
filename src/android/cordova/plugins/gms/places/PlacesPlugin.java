@@ -90,7 +90,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
     private JSONObject placeToJSON(Place place) {
         try {
             JSONObject result = new JSONObject();
-            JSONObject newobjt = new JSONArray();
+            JSONArray newobjt = new JSONArray();
             JSONObject advancedAddress = new JSONObject();
             result.put("placeId", place.getId());
             result.put("name", place.getName());
@@ -101,13 +101,13 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
             );
             for (AddressComponent a : place.getAddressComponents().asList()) {
               JSONObject typeobjt = new JSONObject();
-              if (a.getTypes()) {
+              if (a.getTypes().toString()) {
                 typeobjt.put("types", a.getTypes());
               }
-              if (a.getShortName()) {
+              if (a.getShortName().toString()) {
                 typeobjt.put("shortName", a.getShortName());
               }
-              if (a.getName()) {
+              if (a.getName().toString()) {
                 typeobjt.put("name", a.getName());
               }
               newobjt.put(typeobjt);
