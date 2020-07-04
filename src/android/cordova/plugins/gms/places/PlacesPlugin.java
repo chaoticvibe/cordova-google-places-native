@@ -44,6 +44,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
       FindAutocompletePredictionsRequest request = FindAutocompletePredictionsRequest.builder()
         .setCountry((settings.has("country")) ? settings.getString("country") : null)
         .setTypeFilter((settings.has("types")) ? TypeFilter.values()[settings.getInt("types") - 1] : null)
+        .setOrigin((settings.has("LatLng")) ? new LatLng(settings.getString("LatLng")) : null)
         .setSessionToken(token)
         .setQuery(query)
         .build();
