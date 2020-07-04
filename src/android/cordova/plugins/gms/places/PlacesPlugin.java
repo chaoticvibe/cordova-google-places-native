@@ -62,7 +62,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
 
     @CordovaMethod
     public void getById(String placeId, final CallbackContext callbackContext) {
-      List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
+      List<Place.Field> placeFields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.ADDRESS_COMPONENTS, Place.Field.LAT_LNG);
       FetchPlaceRequest request = FetchPlaceRequest.newInstance(placeId, placeFields);
 
       placesClient.fetchPlace(request).addOnSuccessListener((response) -> {
