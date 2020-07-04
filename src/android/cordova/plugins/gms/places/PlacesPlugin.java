@@ -93,7 +93,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
             result.put("name", place.getName());
             result.put("formattedAddress", place.getAddress());
             result.put("AddressComponents", new JSONArray()
-                       .put(place.getAddressComponent("country"))
+                       .put(place.getJSONObject("addressComponent"))
                       );
             result.put("latlng", new JSONArray()
                 .put(place.getLatLng().latitude)
