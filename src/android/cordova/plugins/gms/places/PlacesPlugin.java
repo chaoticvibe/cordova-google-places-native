@@ -100,8 +100,8 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
                 .put(place.getLatLng().latitude)
                 .put(place.getLatLng().longitude)
             );
-            for (AddressComponent[] a : place.getAddressComponents().asList()) {
-              String types = a.getTypes();
+            for (AddressComponent a : place.getAddressComponents().asList()) {
+              String types = a.getTypes().get(0);
               JSONObject typeobjt = new JSONObject();
               JSONArray newtypes = new JSONArray();
                 newtypes.put(types);
