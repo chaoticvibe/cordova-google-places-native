@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 import java.util.Arrays;
+import java.util.ArrayList;
 
 import by.chemerisuk.cordova.support.CordovaMethod;
 import by.chemerisuk.cordova.support.ReflectiveCordovaPlugin;
@@ -102,11 +103,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
             for (AddressComponent a : place.getAddressComponents().asList()) {
               JSONObject typeobjt = new JSONObject();
               JSONArray newtypes = new JSONArray();
-               
-                for(int l = 0; l < a.getTypes().size(); l++)
-                {  
-                newtypes.put(a.getTypes()[l].toString());
-                }
+                newtypes.put(new ArrayList<>(a.getTypes()));
                typeobjt.put("types", newtypes);
                 typeobjt.put("shortName", a.getShortName());
               
