@@ -103,7 +103,7 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
               JSONObject typeobjt = new JSONObject();
               JSONArray newtypes = new JSONArray();
                
-                for(int l = 0; l < a.getTypes().length; l++)
+                for(int l = 0; l < a.getTypes().size(); l++)
                 {  
                 newtypes.put(a.getTypes()[l].toString());
                 }
