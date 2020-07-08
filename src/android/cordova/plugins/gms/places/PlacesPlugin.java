@@ -106,12 +106,12 @@ public class PlacesPlugin extends ReflectiveCordovaPlugin {
               JSONArray newtypes = new JSONArray();
                 newtypes.put(types);
                typeobjt.put("types",  newtypes);
-                typeobjt.put("shortName", a.getShortName());
+                typeobjt.put("short_name", a.getShortName());
               
-                typeobjt.put("name", a.getName());
+                typeobjt.put("long_name", a.getName());
                 newobjt.put(typeobjt);
         }
-            result.put("addressComponents", newobjt);
+            result.put("address_components", newobjt);
             return result;
         } catch (JSONException e) {
             return null;
